@@ -1,0 +1,128 @@
+/* --- General Styling and Centering --- */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* VIBRANT GRADIENT BACKGROUND */
+    background: linear-gradient(135deg, #f0f8ff, #e0f7fa); 
+    color: #343a40; 
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* FIX: Centers the application wrapper horizontally */
+    min-height: 100vh;
+}
+
+.app-header {
+    background-color: #1e87f0; 
+    color: white;
+    padding: 25px 0;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* --- CONSOLIDATED WRAPPER STYLE (Console Layout) --- */
+.app-wrapper {
+    max-width: 1000px;
+    width: 95%; 
+    
+    /* Card appearance */
+    background-color: white; 
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Gives it the raised, console look */
+    
+    margin: 30px 0; 
+    padding: 0;
+    overflow: hidden;
+}
+
+.container {
+    max-width: 100%;
+    width: 100%;
+    margin: 0; 
+    padding: 20px; 
+}
+
+/* --- APP FOOTER STYLE --- */
+.app-footer {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    text-align: center;
+    padding: 5px 0; 
+    border-top: 1px solid #dee2e6;
+    font-size: 0.9em;
+}
+
+/* --- Summary Metrics (Dashboard Top Section) --- */
+.summary-metrics {
+    padding: 15px 0;
+    box-shadow: none;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    flex-direction: column; 
+    line-height: 1.4;
+}
+
+.summary-metrics strong {
+    font-weight: 600;
+    color: #1e87f0; 
+    margin-right: 5px;
+}
+
+/* --- Accordion/Section Styling (Reactive UI) --- */
+.accordion-section {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+}
+
+.accordion-header {
+    background-color: #e9f5ff; 
+    color: #1e87f0;
+    padding: 12px 20px;
+    font-weight: 700;
+    cursor: pointer;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.accordion-body {
+    padding: 20px;
+    max-height: 1000px; 
+    overflow: hidden;
+    /* CSS transition enables the smooth open/close of the accordion */
+    transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
+}
+.accordion-body:not(.active) {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* --- Task Card and Status Styling --- */
+#taskList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+    padding-top: 10px;
+}
+
+.task-card {
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-left: 6px solid; 
+    background-color: #f8f9fa;
+}
+
+.status-tag {
+    font-size: 0.7em;
+    padding: 2px 7px;
+    border-radius: 3px;
+    color: white;
+}
+.status-pending { background-color: #ffc107; }
+.status-in-progress { background-color: #17a2b8; }
+.status-completed { background-color: #28a745; }
