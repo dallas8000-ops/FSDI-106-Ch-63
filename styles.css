@@ -1,4 +1,4 @@
-/* --- General Styling and Centering --- */
+/* --- General Styling and Centering (Updated for Sticky Footer) --- */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     /* VIBRANT GRADIENT BACKGROUND */
@@ -6,9 +6,10 @@ body {
     color: #343a40; 
     margin: 0;
     padding: 0;
-    display: flex;
+    
+    /* FIX: Use flex column layout to manage header, content, and footer */
+    display: flex; 
     flex-direction: column;
-    align-items: center; /* FIX: Centers the application wrapper horizontally */
     min-height: 100vh;
 }
 
@@ -21,46 +22,143 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* --- CONSOLIDATED WRAPPER STYLE (Console Layout) --- */
+/* --- CONSOLIDATED WRAPPER STYLE (Main Content) --- */
 .app-wrapper {
+    /* FIX: Allow the content wrapper to grow and push the footer down */
+    flex-grow: 1; 
+    
     max-width: 1000px;
     width: 95%; 
     
     /* Card appearance */
     background-color: white; 
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Gives it the raised, console look */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); 
     
-    margin: 30px 0; 
-    padding: 0;
-    overflow: hidden;
+    /* Centers the console on the page */
+    margin: 20px auto; 
+    padding: 30px;
+    
+    /* Grid layout for main sections */
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Input and List view */
+    gap: 30px;
 }
 
-.container {
-    max-width: 100%;
-    width: 100%;
-    margin: 0; 
-    padding: 20px; 
+/* Responsive adjustment for small screens */
+@media (max-width: 768px) {
+    .app-wrapper {
+        grid-template-columns: 1fr; /* Stack layout on mobile */
+        padding: 20px;
+    }
 }
 
-/* --- APP FOOTER STYLE --- */
+/* --- NEW: Footer Styling --- */
 .app-footer {
-    background-color: #f8f9fa;
-    color: #6c757d;
+    width: 100%;
+    background-color: #343a40; /* Dark background */
+    color: #f8f9fa; /* Light text */
     text-align: center;
-    padding: 5px 0; 
-    border-top: 1px solid #dee2e6;
+    padding: 15px 0;
+    margin-top: auto; /* Ensures it is always at the bottom */
     font-size: 0.9em;
 }
 
-/* --- Summary Metrics (Dashboard Top Section) --- */
-.summary-metrics {
-    padding: 15px 0;
-    box-shadow: none;
-    margin-bottom: 25px;
-    border-bottom: 1px solid #f0f0f0;
+/* --- Form and Input Styling (Existing/Retained) --- */
+.input-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #495057;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="number"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #1e87f0;
+    box-shadow: 0 0 0 0.2rem rgba(30, 135, 240, 0.25);
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.btn-primary {
+    background-color: #1e87f0;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.2s;
+    width: 100%;
+}
+
+.btn-primary:hover {
+    background-color: #1a7bbd;
+}
+
+.text-danger {
+    color: #dc3545;
+    font-size: 0.875em;
+    margin-top: 5px;
+    display: none; 
+}
+
+/* --- Task List and Cards (Existing/Retained) --- */
+#taskList {
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
+    gap: 15px;
+}
+
+.task-card {
+    border: 1px solid #e9ecef;
+    border-left: 5px solid var(--task-color); 
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    background-color: #f8f9fa;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative; 
+}
+
+.task-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.task-title {
+    font-size: 1.25em;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #212529;
+}
+
+.task-description {
+    font-size: 0.9em;
+    color: #6c757d;
+    margin-bottom: 10px;
     line-height: 1.4;
 }
 
@@ -70,7 +168,7 @@ body {
     margin-right: 5px;
 }
 
-/* --- Accordion/Section Styling (Reactive UI) --- */
+/* --- Accordion/Section Styling (Existing/Retained) --- */
 .accordion-section {
     border: 1px solid #dee2e6;
     border-radius: 8px;
@@ -92,37 +190,66 @@ body {
     padding: 20px;
     max-height: 1000px; 
     overflow: hidden;
-    /* CSS transition enables the smooth open/close of the accordion */
     transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
 }
 .accordion-body:not(.active) {
     max-height: 0;
     padding-top: 0;
     padding-bottom: 0;
+    border-bottom: none;
 }
 
-/* --- Task Card and Status Styling --- */
-#taskList {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 20px;
-    padding-top: 10px;
+/* --- Action Buttons (Existing/Retained) --- */
+.task-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 5px;
 }
 
-.task-card {
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    border-left: 6px solid; 
-    background-color: #f8f9fa;
+.action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 1.1em;
+    line-height: 1;
+    transition: color 0.2s;
 }
 
-.status-tag {
-    font-size: 0.7em;
-    padding: 2px 7px;
-    border-radius: 3px;
-    color: white;
+.action-btn.edit-btn {
+    color: #007bff;
 }
-.status-pending { background-color: #ffc107; }
-.status-in-progress { background-color: #17a2b8; }
-.status-completed { background-color: #28a745; }
+
+.action-btn.edit-btn:hover {
+    color: #0056b3;
+}
+
+.action-btn.delete-btn {
+    color: #dc3545;
+}
+
+.action-btn.delete-btn:hover {
+    color: #a71d2a;
+}
+
+/* --- Status Badges (Existing/Retained) --- */
+.status-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.75em;
+    font-weight: 600;
+    margin-left: 10px;
+}
+.status-todo { background-color: #d1ecf1; color: #0c5460; }
+.status-in-progress { background-color: #fff3cd; color: #856404; }
+.status-done { background-color: #d4edda; color: #155724; }
+.status-blocked { background-color: #f8d7da; color: #721c24; }
+
+/* Highlight for visual feedback on update/creation (Existing/Retained) */
+.highlight-success {
+    box-shadow: 0 0 15px rgba(30, 135, 240, 0.5);
+    transition: box-shadow 0.3s ease-in-out;
+}

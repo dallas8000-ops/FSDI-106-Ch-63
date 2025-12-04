@@ -3,103 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Manager App</title>
-    <link rel="stylesheet" href="style.css"> 
+    <title>Reactive Task Manager</title>
+    <link rel="stylesheet" href="styles.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    
+
     <header class="app-header">
-        <h1 class="app-title">☰ Task Manager</h1>
-        <p class="app-tagline">Organize your work efficiently</p>
+        <h1>Reactive Project Task Console</h1>
     </header>
 
     <div class="app-wrapper">
-        <main class="container">
+        
+        <div>
             
-            <section class="summary-metrics">
-                <p><strong>Total Tasks</strong>: <span id="totalTasksCount">0</span></p>
-                <p><strong>Tasks Completed</strong>: <span id="completedTasksCount">0</span></p>
-                <p><strong>Total Budget</strong>: $<span id="totalBudget">0.00</span></p>
-            </section>
-
-            <section class="accordion-section">
-                <h2 class="accordion-header" id="createTaskHeader">
-                    <span class="header-icon">✚</span> Create New Task
-                </h2>
-                <div id="createTaskBody" class="accordion-body active">
-                    <form id="taskForm">
-                        
-                        <div class="row"> 
-                            <div class="form-group half-width">
-                                <label for="title">Task Title *</label>
-                                <input type="text" id="title" required placeholder="Enter task title">
-                                <small class="text-muted">Title is required (min 3 characters)</small> 
-                                <span class="validation-error" id="titleError"></span>
-                            </div>
-                            
-                            <div class="form-group half-width">
-                                <label for="status">Status *</label>
-                                <select id="status" required>
-                                    <option value="Pending">Pending</option>
-                                    <option value="In Progress">In Progress</option>
-                                    <option value="Completed">Completed</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="description">Description *</label>
-                            <textarea id="description" required placeholder="Enter task description"></textarea>
-                            <small class="text-muted">Description is required (min 10 characters)</small>
-                            <span class="validation-error" id="descriptionError"></span>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="form-group half-width">
-                                <label for="startDate">Start Date *</label>
-                                <input type="date" id="startDate" required>
-                                <small class="text-muted">Start date is required</small>
-                                <span class="validation-error" id="startDateError"></span>
-                            </div>
-
-                            <div class="form-group half-width">
-                                <label for="budget">Budget ($) *</label>
-                                <input type="number" id="budget" step="0.01" required placeholder="0.00">
-                                <small class="text-muted">Budget must be greater than 0</small>
-                                <span class="validation-error" id="budgetError"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group quarter-width">
-                            <label for="color">Task Color *</label>
-                            <input type="color" id="color" value="#1e87f0" required style="height: 38px;"> 
-                        </div>
-                        
-                        <button type="submit" id="saveBtn">💾 Save Task</button>
-                    </form>
-                </div>
-            </section>
-            
-            <section class="accordion-section">
-                <h2 class="accordion-header" id="taskListHeader">
-                    <span class="header-icon">📋</span> Task List
-                </h2>
-                <div id="taskListBody" class="accordion-body active">
-                    <div id="taskList">
-                        <div class="no-tasks-message">
-                            <p><strong>0 No tasks yet!</strong></p>
-                            <p>Create your first task to get started!</p>
-                        </div>
+            <div class="accordion-section mb-5">
+                <div class="accordion-header" id="metricsHeader">📊 Task Metrics</div>
+                <div class="accordion-body active" id="metricsBody">
+                    <div class="summary-metrics" style="font-size: 0.95em; line-height: 1.8;">
+                        <p>Total Tasks: <strong id="totalTasks">0</strong></p>
+                        <p>To Do: <strong id="tasksTodo">0</strong></p>
+                        <p>In Progress: <strong id="tasksInProgress">0</strong></p>
+                        <p>Done: <strong id="tasksDone">0</strong></p>
+                        <p>Blocked: <strong id="tasksBlocked">0</strong></p>
                     </div>
                 </div>
-            </section>
+            </div>
 
-        </main>
+            <div class="accordion-section">
+                <div class="accordion-header" id="createTaskHeader">✍️ Create/Edit Task</div>
+                <div class="accordion-body active" id="createTaskBody">
+                    <form id="taskForm">
+                        <input type="hidden" id="taskId"> <div class="input-group">
+                            <label for="title">Title</label>
+                            <input type="text" id="title" name="title" placeholder="e.g., Design Landing Page">
+                            <p id="titleError" class="text-danger">Title is required.</p>
+                        </div>
         
-        <footer class="app-footer">
-        </footer>
-    </div>
+                        <div class="input-group">
+                            <label for="startDate">Start Date</label>
+                            <input type="date" id="startDate" name="startDate">
+                            <p id="startDateError" class="text-danger">Start Date is required.</p>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="description">Description</label>
+                            <textarea id="description" name="description" rows="3" placeholder="Detailed description of the task..."></textarea>
+                            <p id="descriptionError" class="text-danger">Description is required.</p>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="status">Status</label>
+                            <select id="status" name="status">
+                                <option value="">Select Status</option>
+                                <option value="To Do">To Do</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Done">Done</option>
+                                <option value="Blocked">Blocked</option>
+                            </select>
+                            <p id="statusError" class="text-danger">Status is required.</p>
+                        </div>
 
-    <script src="./taskManager.js"></script>
+                        <div class="input-group">
+                            <label for="budget">Budget (USD)</label>
+                            <input type="number" id="budget" name="budget" placeholder="e.g., 500" min="0">
+                            <p id="budgetError" class="text-danger">Budget must be a valid non-negative number.</p>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Project Color Tag:</label>
+                            <div style="display: flex; gap: 10px;">
+                                <label><input type="radio" name="color" value="#3b82f6" checked> Blue</label>
+                                <label><input type="radio" name="color" value="#10b981"> Green</label>
+                                <label><input type="radio" name="color" value="#ef4444"> Red</label>
+                                <label><input type="radio" name="color" value="#f59e0b"> Yellow</label>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group" style="display: flex; gap: 10px;">
+                            <button type="submit" id="btnSave" class="btn-primary">Save Task</button>
+                            <button type="button" id="btnReset" class="btn-primary" style="background-color: #6c757d;">Reset Form</button> 
+                            <button type="button" id="btnUpdate" class="btn-primary" style="background-color: #ffc107; display: none;">Update Task</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+        
+        <div>
+            <div class="accordion-section">
+                <div class="accordion-header" id="taskListHeader">📝 Project Task List</div>
+                <div class="accordion-body active" id="taskListBody">
+                    <div id="taskList">
+                        </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+    <footer class="app-footer">
+        © 2025 Reactive Task Manager | All Rights Reserved.
+    </footer>
+    
+    <script src="taskManager.js"></script>
+
 </body>
 </html>
