@@ -1,104 +1,190 @@
-/* --- General Styling and Centering (Updated for Sticky Footer) --- */
+/* --- General Styling and Centering --- */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    /* VIBRANT GRADIENT BACKGROUND */
     background: linear-gradient(135deg, #f0f8ff, #e0f7fa); 
     color: #343a40; 
     margin: 0;
     padding: 0;
-    
-    /* FIX: Use flex column layout to manage header, content, and footer */
     display: flex; 
     flex-direction: column;
     min-height: 100vh;
 }
 
+/* --- Header Styling --- */
 .app-header {
     background-color: #1e87f0; 
     color: white;
-    padding: 25px 0;
+    padding: 20px 0;
     width: 100%;
     text-align: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* --- CONSOLIDATED WRAPPER STYLE (Main Content) --- */
-.app-wrapper {
-    /* FIX: Allow the content wrapper to grow and push the footer down */
-    flex-grow: 1; 
-    
+.metrics-container {
     max-width: 1000px;
+    margin: 0 auto;
+    padding: 10px 20px 0;
+}
+
+.summary-metrics {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    font-size: 1em;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    flex-wrap: wrap;
+}
+
+.summary-metrics strong {
+    font-weight: 700;
+    color: #ffd700;
+}
+
+/* --- Notification Toast --- */
+.notification {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    opacity: 0;
+    transform: translateX(400px);
+    transition: all 0.3s ease-in-out;
+}
+
+.notification.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.notification-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.notification-error {
+    background-color: #dc3545;
+    color: white;
+}
+
+.notification-info {
+    background-color: #17a2b8;
+    color: white;
+}
+
+/* --- Main Body Styling --- */
+.app-wrapper {
+    flex-grow: 1; 
+    max-width: 1000px; 
     width: 95%; 
-    
-    /* Card appearance */
     background-color: white; 
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); 
-    
-    /* Centers the console on the page */
     margin: 20px auto; 
     padding: 30px;
-    
-    /* Grid layout for main sections */
     display: grid;
-    grid-template-columns: 1fr 2fr; /* Input and List view */
+    grid-template-columns: 1fr 1.5fr; 
     gap: 30px;
 }
 
-/* Responsive adjustment for small screens */
-@media (max-width: 768px) {
+@media (max-width: 850px) {
     .app-wrapper {
-        grid-template-columns: 1fr; /* Stack layout on mobile */
-        padding: 20px;
+        grid-template-columns: 1fr; 
     }
 }
 
-/* --- NEW: Footer Styling --- */
-.app-footer {
-    width: 100%;
-    background-color: #343a40; /* Dark background */
-    color: #f8f9fa; /* Light text */
-    text-align: center;
-    padding: 15px 0;
-    margin-top: auto; /* Ensures it is always at the bottom */
-    font-size: 0.9em;
+.form-column .input-group-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
 }
 
-/* --- Form and Input Styling (Existing/Retained) --- */
+@media (max-width: 600px) {
+    .form-column .input-group-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.task-list-section .accordion-body.active {
+    max-height: 500px; 
+    overflow-y: auto; 
+    padding: 20px;
+}
+
+.app-wrapper .accordion-section {
+    margin-bottom: 0;
+}
+
+/* --- Footer Styling --- */
+.app-footer {
+    width: 100%;
+    background-color: #343a40; 
+    color: #f8f9fa; 
+    text-align: center;
+    padding: 15px 0;
+    margin-top: auto; 
+    font-size: 0.85em;
+    border-top: 1px solid #dee2e6;
+}
+
+.footer-text {
+    margin: 0; 
+}
+
+/* --- Form and Input Styling --- */
 .input-group {
     margin-bottom: 15px;
 }
 
-label {
+.input-group label {
     display: block;
+    font-weight: 600;
     margin-bottom: 5px;
-    font-weight: 500;
     color: #495057;
 }
 
-input[type="text"],
-input[type="date"],
-input[type="number"],
-select,
-textarea {
+.input-group input,
+.input-group select,
+.input-group textarea {
     width: 100%;
-    padding: 10px 15px;
+    padding: 10px;
     border: 1px solid #ced4da;
     border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.2s;
     box-sizing: border-box;
-    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-input:focus,
-select:focus,
-textarea:focus {
-    border-color: #1e87f0;
-    box-shadow: 0 0 0 0.2rem rgba(30, 135, 240, 0.25);
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus {
     outline: none;
+    border-color: #1e87f0;
+    box-shadow: 0 0 0 3px rgba(30, 135, 240, 0.1);
 }
 
-textarea {
-    resize: vertical;
+.text-danger {
+    color: #dc3545;
+    font-size: 0.875em;
+    margin-top: 5px;
+    height: 1.1em;
+    visibility: hidden;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.action-buttons button {
+    width: auto; 
+    flex-grow: 1;
 }
 
 .btn-primary {
@@ -111,145 +197,258 @@ textarea {
     font-size: 16px;
     font-weight: 600;
     transition: background-color 0.2s;
-    width: 100%;
 }
 
 .btn-primary:hover {
-    background-color: #1a7bbd;
+    background-color: #1670d6;
 }
 
-.text-danger {
-    color: #dc3545;
-    font-size: 0.875em;
-    margin-top: 5px;
-    display: none; 
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.2s;
 }
 
-/* --- Task List and Cards (Existing/Retained) --- */
-#taskList {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.btn-secondary:hover {
+    background-color: #5a6268;
 }
 
-.task-card {
-    border: 1px solid #e9ecef;
+/* --- Color Slider Styling (FIXED) --- */
+#colorSlider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%; 
+    height: 8px; 
+    border-radius: 4px;
+    outline: none;
+    opacity: 0.9;
+    transition: opacity .2s;
+    background: #ddd;
+}
+
+/* For WebKit browsers (Chrome, Safari, Edge) */
+#colorSlider::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(to right, 
+        hsl(0, 70%, 50%), 
+        hsl(60, 70%, 50%), 
+        hsl(120, 70%, 50%), 
+        hsl(180, 70%, 50%), 
+        hsl(240, 70%, 50%), 
+        hsl(300, 70%, 50%), 
+        hsl(360, 70%, 50%)
+    );
+}
+
+/* For Firefox */
+#colorSlider::-moz-range-track {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(to right, 
+        hsl(0, 70%, 50%), 
+        hsl(60, 70%, 50%), 
+        hsl(120, 70%, 50%), 
+        hsl(180, 70%, 50%), 
+        hsl(240, 70%, 50%), 
+        hsl(300, 70%, 50%), 
+        hsl(360, 70%, 50%)
+    );
+}
+
+#colorSlider:hover {
+    opacity: 1;
+}
+
+/* Slider thumb for WebKit */
+#colorSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%; 
+    background: #ffffff;
+    cursor: pointer;
+    border: 3px solid #1e87f0; 
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Slider thumb for Firefox */
+#colorSlider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+    border: 3px solid #1e87f0;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Task List and Cards --- */
+#taskList { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 15px; 
+}
+
+.task-card { 
+    border: 1px solid #e9ecef; 
     border-left: 5px solid var(--task-color); 
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    background-color: #f8f9fa;
-    transition: transform 0.2s, box-shadow 0.2s;
+    padding: 15px; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); 
+    background-color: #fff; 
+    transition: transform 0.2s, box-shadow 0.2s; 
     position: relative; 
 }
 
-.task-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+.task-card:hover { 
+    transform: translateY(-2px); 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); 
 }
 
-.task-title {
-    font-size: 1.25em;
-    font-weight: 600;
-    margin-bottom: 5px;
-    color: #212529;
+.task-title-group { 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    margin-bottom: 5px; 
 }
 
-.task-description {
-    font-size: 0.9em;
-    color: #6c757d;
-    margin-bottom: 10px;
-    line-height: 1.4;
+.task-title { 
+    font-size: 1.25em; 
+    font-weight: 600; 
+    color: #212529; 
 }
 
-.summary-metrics strong {
-    font-weight: 600;
+.task-description { 
+    font-size: 0.9em; 
+    color: #6c757d; 
+    margin-bottom: 10px; 
+    line-height: 1.4; 
+}
+
+.task-card .summary-metrics { 
+    font-size: 0.9em; 
+    color: #495057; 
+    display: flex; 
+    gap: 10px; 
+}
+
+.task-card .summary-metrics span strong { 
     color: #1e87f0; 
-    margin-right: 5px;
 }
 
-/* --- Accordion/Section Styling (Existing/Retained) --- */
-.accordion-section {
-    border: 1px solid #dee2e6;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    overflow: hidden;
+/* --- Accordion/Section Styling --- */
+.accordion-section { 
+    border: 1px solid #dee2e6; 
+    border-radius: 8px; 
+    overflow: hidden; 
+    margin-bottom: 20px; 
 }
 
-.accordion-header {
+.accordion-header { 
     background-color: #e9f5ff; 
-    color: #1e87f0;
-    padding: 12px 20px;
-    font-weight: 700;
-    cursor: pointer;
-    border-bottom: 1px solid #dee2e6;
+    color: #1e87f0; 
+    padding: 12px 20px; 
+    font-weight: 700; 
+    cursor: pointer; 
+    border-bottom: 1px solid #dee2e6; 
 }
 
-.accordion-body {
-    padding: 20px;
+.accordion-header:hover {
+    background-color: #d4edff;
+}
+
+.accordion-body { 
     max-height: 1000px; 
-    overflow: hidden;
-    transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
-}
-.accordion-body:not(.active) {
-    max-height: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    border-bottom: none;
+    overflow: hidden; 
+    transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out; 
 }
 
-/* --- Action Buttons (Existing/Retained) --- */
-.task-actions {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    display: flex;
-    gap: 5px;
+.accordion-body:not(.active) { 
+    max-height: 0; 
+    padding-top: 0; 
+    padding-bottom: 0; 
+    border-bottom: none; 
 }
 
-.action-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 5px;
-    font-size: 1.1em;
-    line-height: 1;
-    transition: color 0.2s;
+.update-btn { 
+    background-color: #ffc107 !important; 
+    color: #212529 !important; 
 }
 
-.action-btn.edit-btn {
-    color: #007bff;
+.update-btn:hover { 
+    background-color: #e0a800 !important; 
 }
 
-.action-btn.edit-btn:hover {
-    color: #0056b3;
+/* --- Status Badges --- */
+.status-badge { 
+    display: inline-block; 
+    padding: 3px 8px; 
+    border-radius: 12px; 
+    font-size: 0.75em; 
+    font-weight: 600; 
 }
 
-.action-btn.delete-btn {
-    color: #dc3545;
+.status-todo { 
+    background-color: #d1ecf1; 
+    color: #0c5460; 
 }
 
-.action-btn.delete-btn:hover {
-    color: #a71d2a;
+.status-in-progress { 
+    background-color: #fff3cd; 
+    color: #856404; 
 }
 
-/* --- Status Badges (Existing/Retained) --- */
-.status-badge {
-    display: inline-block;
-    padding: 3px 8px;
-    border-radius: 12px;
-    font-size: 0.75em;
-    font-weight: 600;
-    margin-left: 10px;
+.status-done { 
+    background-color: #d4edda; 
+    color: #155724; 
 }
-.status-todo { background-color: #d1ecf1; color: #0c5460; }
-.status-in-progress { background-color: #fff3cd; color: #856404; }
-.status-done { background-color: #d4edda; color: #155724; }
-.status-blocked { background-color: #f8d7da; color: #721c24; }
 
-/* Highlight for visual feedback on update/creation (Existing/Retained) */
-.highlight-success {
-    box-shadow: 0 0 15px rgba(30, 135, 240, 0.5);
-    transition: box-shadow 0.3s ease-in-out;
+.status-blocked { 
+    background-color: #f8d7da; 
+    color: #721c24; 
+}
+
+/* --- Task Action Buttons --- */
+.task-actions { 
+    position: absolute; 
+    top: 10px; 
+    right: 10px; 
+    display: flex; 
+    gap: 5px; 
+}
+
+.action-btn { 
+    background: none; 
+    border: none; 
+    cursor: pointer; 
+    padding: 5px; 
+    font-size: 1.1em; 
+    line-height: 1; 
+    transition: color 0.2s; 
+}
+
+.action-btn.edit-btn { 
+    color: #007bff; 
+}
+
+.action-btn.edit-btn:hover { 
+    color: #0056b3; 
+}
+
+.action-btn.delete-btn { 
+    color: #dc3545; 
+}
+
+.action-btn.delete-btn:hover { 
+    color: #bd2130; 
 }

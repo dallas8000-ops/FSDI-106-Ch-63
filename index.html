@@ -11,103 +11,102 @@
 
     <header class="app-header">
         <h1>Reactive Project Task Console</h1>
+        <div class="metrics-container">
+            <div class="summary-metrics">
+                <span>Total Tasks: <strong id="totalTasks">0</strong></span>
+                <span>To Do: <strong id="tasksTodo">0</strong></span>
+                <span>In Progress: <strong id="tasksInProgress">0</strong></span>
+                <span>Done: <strong id="tasksDone">0</strong></span>
+                <span>Blocked: <strong id="tasksBlocked">0</strong></span>
+            </div>
+        </div>
     </header>
 
-    <div class="app-wrapper">
-        
-        <div>
-            
-            <div class="accordion-section mb-5">
-                <div class="accordion-header" id="metricsHeader">📊 Task Metrics</div>
-                <div class="accordion-body active" id="metricsBody">
-                    <div class="summary-metrics" style="font-size: 0.95em; line-height: 1.8;">
-                        <p>Total Tasks: <strong id="totalTasks">0</strong></p>
-                        <p>To Do: <strong id="tasksTodo">0</strong></p>
-                        <p>In Progress: <strong id="tasksInProgress">0</strong></p>
-                        <p>Done: <strong id="tasksDone">0</strong></p>
-                        <p>Blocked: <strong id="tasksBlocked">0</strong></p>
-                    </div>
-                </div>
-            </div>
+    <!-- Notification Toast -->
+    <div id="notification" class="notification"></div>
 
-            <div class="accordion-section">
-                <div class="accordion-header" id="createTaskHeader">✍️ Create/Edit Task</div>
+    <main class="app-wrapper two-column-grid">
+        
+        <div class="form-column">
+            <div class="accordion-section full-width">
+                <div class="accordion-header" id="createTaskHeader">✏️ Create/Edit Task</div>
                 <div class="accordion-body active" id="createTaskBody">
                     <form id="taskForm">
-                        <input type="hidden" id="taskId"> <div class="input-group">
+                        <input type="hidden" id="taskId">
+                        
+                        <div class="input-group">
                             <label for="title">Title</label>
                             <input type="text" id="title" name="title" placeholder="e.g., Design Landing Page">
                             <p id="titleError" class="text-danger">Title is required.</p>
                         </div>
         
-                        <div class="input-group">
-                            <label for="startDate">Start Date</label>
-                            <input type="date" id="startDate" name="startDate">
-                            <p id="startDateError" class="text-danger">Start Date is required.</p>
+                        <div class="input-group-row">
+                            <div class="input-group">
+                                <label for="startDate">Start Date</label>
+                                <input type="date" id="startDate" name="startDate">
+                                <p id="startDateError" class="text-danger">Start Date is required.</p>
+                            </div>
+                            <div class="input-group">
+                                <label for="status">Status</label>
+                                <select id="status" name="status">
+                                    <option value="">Select Status</option>
+                                    <option value="To Do">To Do</option>
+                                    <option value="In Progress">In Progress</option>
+                                    <option value="Done">Done</option>
+                                    <option value="Blocked">Blocked</option>
+                                </select>
+                                <p id="statusError" class="text-danger">Status is required.</p>
+                            </div>
                         </div>
-                        
+
                         <div class="input-group">
                             <label for="description">Description</label>
                             <textarea id="description" name="description" rows="3" placeholder="Detailed description of the task..."></textarea>
                             <p id="descriptionError" class="text-danger">Description is required.</p>
                         </div>
-                        
-                        <div class="input-group">
-                            <label for="status">Status</label>
-                            <select id="status" name="status">
-                                <option value="">Select Status</option>
-                                <option value="To Do">To Do</option>
-                                <option value="In Progress">In Progress</option>
-                                <option value="Done">Done</option>
-                                <option value="Blocked">Blocked</option>
-                            </select>
-                            <p id="statusError" class="text-danger">Status is required.</p>
-                        </div>
 
-                        <div class="input-group">
-                            <label for="budget">Budget (USD)</label>
-                            <input type="number" id="budget" name="budget" placeholder="e.g., 500" min="0">
-                            <p id="budgetError" class="text-danger">Budget must be a valid non-negative number.</p>
-                        </div>
-
-                        <div class="input-group">
-                            <label>Project Color Tag:</label>
-                            <div style="display: flex; gap: 10px;">
-                                <label><input type="radio" name="color" value="#3b82f6" checked> Blue</label>
-                                <label><input type="radio" name="color" value="#10b981"> Green</label>
-                                <label><input type="radio" name="color" value="#ef4444"> Red</label>
-                                <label><input type="radio" name="color" value="#f59e0b"> Yellow</label>
+                        <div class="input-group-row">
+                            <div class="input-group">
+                                <label for="budget">Budget (USD)</label>
+                                <input type="number" id="budget" name="budget" placeholder="e.g., 500" min="0" step="0.01">
+                                <p id="budgetError" class="text-danger">Budget must be a valid non-negative number.</p>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="colorSlider">Project Color Tag: <span id="colorNameDisplay">Red</span></label>
+                                <input type="range" id="colorSlider" name="colorSlider" min="0" max="19" value="0">
+                                <input type="hidden" id="color" name="color" value="hsl(0, 70%, 50%)">
                             </div>
                         </div>
                         
-                        <div class="input-group" style="display: flex; gap: 10px;">
+                        <div class="input-group action-buttons">
                             <button type="submit" id="btnSave" class="btn-primary">Save Task</button>
-                            <button type="button" id="btnReset" class="btn-primary" style="background-color: #6c757d;">Reset Form</button> 
-                            <button type="button" id="btnUpdate" class="btn-primary" style="background-color: #ffc107; display: none;">Update Task</button>
+                            <button type="button" id="btnReset" class="btn-secondary">Reset Form</button> 
+                            <button type="button" id="btnUpdate" class="btn-primary update-btn" style="display: none;">Update Task</button>
                         </div>
                     </form>
                 </div>
             </div>
-            
         </div>
         
-        <div>
-            <div class="accordion-section">
-                <div class="accordion-header" id="taskListHeader">📝 Project Task List</div>
+        <div class="list-column">
+            <div class="accordion-section full-width task-list-section">
+                <div class="accordion-header" id="taskListHeader">📋 Project Task List</div>
                 <div class="accordion-body active" id="taskListBody">
                     <div id="taskList">
-                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-    </div>
+        
+    </main>
     
     <footer class="app-footer">
-        © 2025 Reactive Task Manager | All Rights Reserved.
+        <p class="footer-text">© 2025 Reactive Task Manager | All Rights Reserved.</p>
     </footer>
     
-    <script src="taskManager.js"></script>
+    <script src="Task.js"></script>
 
 </body>
 </html>
+
